@@ -12,7 +12,7 @@ export default class Body extends React.Component {
   handleKeyPress(e) {
     if(e.key === 'Enter') {
       document.getElementById("actionbutton").click();
-    
+      console.log("okay...");
     }
   }
 
