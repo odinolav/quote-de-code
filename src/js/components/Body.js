@@ -6,13 +6,11 @@ export default class Body extends React.Component {
     let infield = document.getElementById("infield").value;
     this.props.changeMessage(infield);
     document.getElementById("infield").value = "";
-
   }
 
   handleKeyPress(e) {
     if(e.key === 'Enter') {
       document.getElementById("actionbutton").click();
-      console.log("okay...");
     }
   }
 
