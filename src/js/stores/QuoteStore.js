@@ -16,10 +16,45 @@ class QuoteStore extends EventEmitter {
   }
 
   generateSynonyms(word) {
+    switch(word) {
+      case "a" || "an":
+        return ["a", "an", "one"];
+      case "be":
+        return ["exist", "abide", "act"];
+      case "has":
+        return ["bears", "carries", "contains", "posesses"];
+      case "foolish":
+        return ["stupid", "dumb", "irrational", "ludicrous", "silly", "unreasonable"];
+      case "forget":
+        return ["disremember"];
+      case "have":
+        return ["bear", "carry", "contain", "posess"];
+      case "hear":
+        return ["listen", "overhear"];
+      case "joy":
+        return ["happiness", "amusement", "bliss", "cheer", "pride", "satisfaction"];
+      case "look":
+        return ["gaze", "peek", "glance", "review", "stare"];
+      case "love":
+        return ["passion", "yearning", "devotion"];
+      case "many":
+        return ["numerous", "profuse", "abundant"];
+      case "will":
+        return ["shall", "tend to", "have a tendency to", "are going to", "must", "resolution", "resolve"];
+      case "wish":
+        return ["ambition", "aspiration", "hope", "inclination", "yearning", "desire", "will that"];
+      case "see":
+        return ["view", "detect", "understand", "watch", "behold"];
+      case "seem":
+        return ["imply", "look", "give the feeling of"];
+      case "seems":
+        return ["implies", "looks", "gives the feeling of"];
+      default: ;
+    }
     if (word.length <= 4) {
       return [];
     }
-    var self = this;
+  
     var synonymSet = new Set();
     /*
     // Get synonyms from big API
