@@ -1,27 +1,35 @@
 import React from "react";
 
+import QuoteBox from "./body/QuoteBox";
+import PointBox from "./body/PointBox";
+
+import QuoteStore from "../stores/QuoteStore";
+
 export default class Body extends React.Component {
 
-  handleChange(e) {
-    let infield = document.getElementById("infield").value;
-    this.props.changeMessage(infield);
-    document.getElementById("infield").value = "";
+  handleChange() {
+    QuoteStore.newQuote();
   }
 
   handleKeyPress(e) {
-    if(e.key === 'Enter') {
-      document.getElementById("actionbutton").click();
-    }
+    /*if(e.key === 'Enter') {
+      let infield = document.getElementById("infield").value;
+      this.props.attemptWordChange(infield);
+      document.getElementById("infield").value = "";
+    }*/
   }
 
   render() {
     return (
       <div id="bod">
-        {this.props.children}
-        <h3>{this.props.message}</h3>
-        <input id="infield" onKeyPress={this.handleKeyPress.bind(this)}/>
+        <PointBox />
+        <QuoteBox />
+        <div id="buttonrow">
+          <button id="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
+          <input id="infield" onKeyPress={this.handleKeyPress.bind(this)}/>
+          <button id="actionbutton">Cheat</button>
+        </div>
         <br />
-        <button id="actionbutton" onClick={this.handleChange.bind(this)}></button>
       </div>
     );
   }

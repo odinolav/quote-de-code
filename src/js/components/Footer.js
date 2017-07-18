@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default class Footer extends React.Component {
   render() {
     return (
       <footer>
-          <Link to="bones">bones</Link> <Link to="beasts">beasts</Link>
+          <p>
+            © James Miller 2017 ■ Thesaurus service provided by words.bighugelabs.com
+          </p>
       </footer>
     );
   }
