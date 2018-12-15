@@ -54,7 +54,7 @@ class QuoteStore extends EventEmitter {
     if (word.length <= 4) {
       return [];
     }
-  
+
     var synonymSet = new Set();
     /*
     // Get synonyms from big API

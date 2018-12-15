@@ -67,7 +67,6 @@ h4 {
 
 .magicword {
   padding: 0 .1em;
-  animation: fadein .2s;
   font-size: 1.2em;
   transition: .2s;
 }
