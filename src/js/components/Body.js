@@ -12,22 +12,26 @@ export default class Body extends React.Component {
   }
 
   handleKeyPress(e) {
-    /*if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       let infield = document.getElementById("infield").value;
-      this.props.attemptWordChange(infield);
+      this.quoteBox.attemptWordChange(infield);
       document.getElementById("infield").value = "";
-    }*/
+    }
+  }
+
+  componentDidMount() {
+   this.inputField.focus();
   }
 
   render() {
     return (
       <div id="bod">
         <PointBox />
-        <QuoteBox />
+        <QuoteBox ref={instance => { this.quoteBox = instance; }} />
         <div id="buttonrow">
-          <button id="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
-          <input id="infield" onKeyPress={this.handleKeyPress.bind(this)}/>
-          <button id="actionbutton">Cheat</button>
+          <button id="newbutton" className="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
+          <input id="infield" ref={input => { this.inputField = input; }} onKeyPress={this.handleKeyPress.bind(this)}/>
+          <button className="actionbutton">Cheat</button>
         </div>
         <br />
       </div>

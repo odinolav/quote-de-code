@@ -6,9 +6,9 @@ class PointStore extends EventEmitter {
     this.points = 0;
   }
 
-  changePoints(value) {
+  addPoints(value) {
     this.points += value;
-    this.emit("change");
+    this.emit("CHANGE");
   }
 
   getPoints() {

@@ -71,6 +71,15 @@ h4 {
   transition: .2s;
 }
 
+.wiggle {
+  animation: .2s wiggle;
+}
+
+@keyframes wiggle {
+  from {transform: rotate(-360deg);}
+  to {transform: rotate(0deg);}
+}
+
 .magicword.highlighted:hover {
   background-color: rgba(200,0,0,.7);
   color: white;
@@ -160,6 +169,16 @@ button {
   background: rgba(200,0,0,.7);
   box-shadow: 0 0 4px black;
   transition: .2s;
+}
+
+.buttonalert {
+  animation: .4s tempgrow 2;
+}
+
+@keyframes tempgrow {
+    0%      {transform: scale(1);}
+    50%     {transform: scale(1.5);}
+    100%    {transform: scale(1);}
 }
 
 button:hover {

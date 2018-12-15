@@ -12,9 +12,9 @@ export default class PointBox extends React.Component {
   }
 
   componentWillMount() {
-    PointStore.on("change", () => {
+    PointStore.on("CHANGE", () => {
       this.setState({
-        points: PointStore.getAll()
+        points: PointStore.getPoints()
       });
     });
   }

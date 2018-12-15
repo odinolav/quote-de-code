@@ -26,11 +26,11 @@ class QuoteStore extends EventEmitter {
       case "foolish":
         return ["stupid", "dumb", "irrational", "ludicrous", "silly", "unreasonable"];
       case "forget":
-        return ["disremember"];
+        return ["disremember", "fail to remember"];
       case "have":
         return ["bear", "carry", "contain", "posess"];
       case "hear":
-        return ["listen", "overhear"];
+        return ["listen", "overhear", "apprehend", "make out"];
       case "joy":
         return ["happiness", "amusement", "bliss", "cheer", "pride", "satisfaction"];
       case "look":
@@ -148,8 +148,18 @@ class QuoteStore extends EventEmitter {
     return {id: this.id, quote: this.quote, author: this.author};
   }
 
+  revealAtIndex(i) {
+    console.log("UPDATE_QUOTE@"+i);
+    this.quote[i].displayWord = this.quote[i].trueWord;
+    this.emit("UPDATE_QUOTE@"+i);
+  }
+
   getDisplayWord(index) {
     return this.quote[index].displayWord;
+  }
+
+  getTrueWord(index) {
+    return this.quote[index].trueWord;
   }
 
   getSyonyms(index) {
