@@ -1,6 +1,7 @@
 import React from "react";
 
 import PointStore from "../../stores/PointStore";
+import QuoteStore from "../../stores/QuoteStore";
 
 export default class PointBox extends React.Component {
 
@@ -17,11 +18,17 @@ export default class PointBox extends React.Component {
         points: PointStore.getPoints()
       });
     });
+    QuoteStore.on("SOLVED", () => {
+      this.pointText.classList.add("flash");
+    });
+    QuoteStore.on("NEW_QUOTE", () => {
+      this.pointText.classList.remove("flash");
+    });
   }
 
   render() {
     return (
-        <h4>Points: {this.state.points}</h4>
+        <h4 id="points" ref={pointText => { this.pointText = pointText; }}>Points: {this.state.points}</h4>
     );
   }
 }

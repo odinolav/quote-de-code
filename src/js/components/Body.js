@@ -13,8 +13,15 @@ export default class Body extends React.Component {
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
-      let infield = document.getElementById("infield").value;
-      this.quoteBox.attemptWordChange(infield);
+      if (QuoteStore.solved) {
+        this.handleChange();
+      } else {
+        let infield = document.getElementById("infield").value;
+        infield.split(" ").forEach((attemptWord) => {
+          this.quoteBox.attemptWordChange(attemptWord);
+          console.log(attemptWord);
+        });
+      }
       document.getElementById("infield").value = "";
     }
   }

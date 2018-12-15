@@ -11,6 +11,22 @@ class PointStore extends EventEmitter {
     this.emit("CHANGE");
   }
 
+  gotWord() {
+    this.addPoints(1);
+  }
+
+  solvedQuote() {
+    this.addPoints(10);
+  }
+
+  wrongGuess() {
+    this.addPoints(-1);
+  }
+
+  cheat() {
+    this.addPoints(-10);
+  }
+
   getPoints() {
     return this.points;
   }

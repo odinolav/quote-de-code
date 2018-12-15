@@ -65,6 +65,16 @@ h4 {
   color: rgba(200,0,0,.7);
 }
 
+.flash {
+  animation: .2s textflash 1;
+}
+
+@keyframes textflash {
+    0%      {color: auto; letter-spacing: normal;}
+    50%     {color: white; letter-spacing: .4em;}
+    100%    {color: auto; letter-spacing: normal;}
+}
+
 .magicword {
   padding: 0 .1em;
   font-size: 1.2em;
@@ -86,8 +96,15 @@ h4 {
 }
 
 .magicword.highlighted {
-  color: rgba(200,0,0,.7);
   cursor: pointer;
+}
+
+.magicword.highlighted.synonym {
+  color: rgba(200,0,0,.7);
+}
+
+.magicword.highlighted.rhyme {
+  color: rgba(0,0,200,.7);
 }
 
 blockquote {
@@ -115,6 +132,10 @@ blockquote::before {
 blockquote small {
   font-style: italic;
   color: #93BADC;
+}
+
+#author {
+  display: inline-block;
 }
 
 blockquote span {

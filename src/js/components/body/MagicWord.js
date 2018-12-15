@@ -10,15 +10,16 @@ export default class MagicWord extends React.Component {
     this.state = {
       displayWord: this.props.displayWord,
       trueWord: this.props.trueWord,
-      synonyms: this.props.synonyms,
+      encoded: this.props.encoded,
+      encoding: this.props.encoding,
       index: this.props.index,
       classes: 'okay'
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     QuoteStore.on("UPDATE_QUOTE@"+this.state.index, () => {
-      PointStore.addPoints(2);
+      PointStore.gotWord();
       this.setState({
         displayWord: QuoteStore.getDisplayWord(this.state.index),
         classes: 'wiggle'
@@ -27,20 +28,28 @@ export default class MagicWord extends React.Component {
   }
 
   handleKeyPress(e) {
-    var synonyms = this.state.synonyms;
-    if (this.state.displayWord !== this.state.trueWord && synonyms.length > 1) {
-      let newWord = synonyms[Math.floor(Math.random()*synonyms.length)];
+    var synonyms = this.state.encoded;
+    if (this.state.displayWord !== this.state.trueWord && this.state.encoded.length > 1) {
+      let newWord = synonyms[Math.floor(Math.random()* this.state.encoded.length)];
       this.setState({
         displayWord: newWord,
       });
-      PointStore.addPoints(-1);
+      PointStore.wrongGuess();
     }
+    document.getElementById("infield").focus();
     console.log(this.state.trueWord);
   }
 
   render() {
+
+    let color = "";
+    if (this.state.displayWord !== this.state.trueWord) {
+      color += "highlighted ";
+      color += this.state.encoding;
+    }
+
     return (
-      <span className={this.state.classes + " magicword " + (this.state.displayWord === this.state.trueWord ? "" : "highlighted")} onClick={() => {this.handleKeyPress()}}>{this.state.displayWord}</span>
+      <span className={this.state.classes + " magicword " + color} onClick={() => {this.handleKeyPress()}}>{this.state.displayWord}</span>
     );
   }
 }
