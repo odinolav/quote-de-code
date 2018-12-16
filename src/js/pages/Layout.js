@@ -9,7 +9,7 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="layout">
         <Header />
         <Body />
         <Footer />

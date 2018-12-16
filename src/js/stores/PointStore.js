@@ -24,7 +24,8 @@ class PointStore extends EventEmitter {
   }
 
   cheat() {
-    this.addPoints(-10);
+    this.addPoints(-5);
+    this.emit("BAD_CHANGE");
   }
 
   getPoints() {

@@ -15,7 +15,6 @@ export default class QuoteBox extends React.Component {
 
   componentWillMount() {
     QuoteStore.on("NEW_QUOTE", () => {
-      console.log("NEW_QUOTE");
       document.getElementById("newbutton").classList.remove("buttonalert");
       this.setState({
         loadedQuote: QuoteStore.getAll(),
@@ -23,12 +22,19 @@ export default class QuoteBox extends React.Component {
     });
   }
 
+  cleanWord(word) {
+    return word.toLowerCase().replace(",", "");
+  }
+
   attemptWordChange(inWord) {
     if (inWord) {
-      console.log(this.state.loadedQuote.quote);
+      inWord = inWord.toLowerCase().replace(",", "");
+      console.log("INWORD: " + inWord);
       let tempQ = this.state.loadedQuote.quote;
       for (let i = 0; i < tempQ.length; i++) {
-        if (inWord.toLowerCase() === tempQ[i].trueWord.toLowerCase() && inWord.toLowerCase() !== tempQ[i].displayWord.toLowerCase()) {
+
+        let standard = tempQ[i];
+        if (inWord === this.cleanWord(standard.trueWord) && inWord !== this.cleanWord(standard.displayWord)) {
           QuoteStore.revealAtIndex(i);
 
           let allGood = true;
@@ -56,9 +62,10 @@ export default class QuoteBox extends React.Component {
     });
 
     return (
-      <div>
-        <blockquote><span ref={instance => { this.quoteList = instance; }}>{ quoteArray }</span><small id="author">—{this.state.loadedQuote.author}</small></blockquote>
-      </div>
+        <blockquote>
+          <span ref={instance => { this.quoteList = instance; }}>{ quoteArray }</span>
+          <small id="author">—{this.state.loadedQuote.author}</small>
+        </blockquote>
     );
   }
 }

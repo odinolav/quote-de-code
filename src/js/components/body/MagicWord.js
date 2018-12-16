@@ -13,7 +13,8 @@ export default class MagicWord extends React.Component {
       encoded: this.props.encoded,
       encoding: this.props.encoding,
       index: this.props.index,
-      classes: 'okay'
+      classes: '',
+      otherClasses: ''
     };
   }
 
@@ -25,19 +26,36 @@ export default class MagicWord extends React.Component {
         classes: 'wiggle'
       });
     });
+
+    QuoteStore.on("ENABLE_CHEAT_MODE", () => {
+      this.setState({classes: "crosshair"});
+    });
+
+    QuoteStore.on("DISABLE_CHEAT_MODE", () => {
+      this.setState({classes: ""});
+    });
   }
 
-  handleKeyPress(e) {
-    var synonyms = this.state.encoded;
-    if (this.state.displayWord !== this.state.trueWord && this.state.encoded.length > 1) {
-      let newWord = synonyms[Math.floor(Math.random()* this.state.encoded.length)];
-      this.setState({
-        displayWord: newWord,
-      });
-      PointStore.wrongGuess();
+  click() {
+
+    if (QuoteStore.cheatMode) {
+      this.setState({otherClasses: "cheat-word"});
+      PointStore.cheat();
+      QuoteStore.revealAtIndex(this.state.index);
+      QuoteStore.disableCheatMode();
+    } else {
+      var synonyms = this.state.encoded;
+      if (this.state.displayWord !== this.state.trueWord && this.state.encoded.length > 1) {
+        let newWord = synonyms[Math.floor(Math.random()* this.state.encoded.length)];
+        this.setState({
+          displayWord: newWord,
+        });
+        PointStore.wrongGuess();
+      }
     }
     document.getElementById("infield").focus();
     console.log(this.state.trueWord);
+
   }
 
   render() {
@@ -49,7 +67,7 @@ export default class MagicWord extends React.Component {
     }
 
     return (
-      <span className={this.state.classes + " magicword " + color} onClick={() => {this.handleKeyPress()}}>{this.state.displayWord}</span>
+      <span className={this.state.otherClasses + " " + this.state.classes + " magicword " + color} onClick={this.click.bind(this)}>{this.state.displayWord}</span>
     );
   }
 }

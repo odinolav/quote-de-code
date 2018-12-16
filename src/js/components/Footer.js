@@ -5,7 +5,7 @@ export default class Footer extends React.Component {
     return (
       <footer>
           <p>
-            © James Miller 2017 ■ Thesaurus service provided by words.bighugelabs.com
+            © James Miller 2017
           </p>
       </footer>
     );

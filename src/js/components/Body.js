@@ -26,21 +26,22 @@ export default class Body extends React.Component {
     }
   }
 
+  startCheatMode() {
+    QuoteStore.enableCheatMode();
+  }
+
   componentDidMount() {
    this.inputField.focus();
   }
 
   render() {
     return (
-      <div id="bod">
+      <div id="maincontent">
         <PointBox />
         <QuoteBox ref={instance => { this.quoteBox = instance; }} />
-        <div id="buttonrow">
-          <button id="newbutton" className="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
-          <input id="infield" ref={input => { this.inputField = input; }} onKeyPress={this.handleKeyPress.bind(this)}/>
-          <button className="actionbutton">Cheat</button>
-        </div>
-        <br />
+        <button id="newbutton" className="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
+        <input id="infield" ref={input => { this.inputField = input; }} onKeyPress={this.handleKeyPress.bind(this)}/>
+        <button id="cheatbutton" className="actionbutton" onClick={this.startCheatMode}>Cheat</button>
       </div>
     );
   }

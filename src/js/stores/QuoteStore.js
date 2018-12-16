@@ -14,6 +14,7 @@ class QuoteStore extends EventEmitter {
       {displayWord: "stone.", trueWord: "rock", encoded: ["stone", "hard object"], encoding: "synonym"}
     ];
     this.solved = false;
+    this.cheatMode = false;
     this.author = "James Miller";
   }
 
@@ -51,6 +52,14 @@ class QuoteStore extends EventEmitter {
         return {encodedArray: ["imply", "look", "give the feeling of"], encoding: "synonym"};
       case "seems":
         return {encodedArray: ["implies", "looks", "gives the feeling of"], encoding: "synonym"};
+      case "make":
+        return {encodedArray: ["construct", "build", "assemble", "put together", "manufacture", "produce", "fabricate", "create", "form", "fashion", "model"], encoding: "synonym"};
+      case "better":
+        return {encodedArray: ["superior", "finer", "of higher quality", "healthier", "surpass", "beat"], encoding: "synonym"};
+      case "world":
+        return {encodedArray: ["twirled", "hurled", "unfurled"], encoding: "rhyme"};
+      case "them":
+        return {encodedArray: ["hem", "phlegm", "gem", "lem", "femme"], encoding: "rhyme"};
       default: ;
     }
     if (word.length <= 3) {
@@ -59,6 +68,10 @@ class QuoteStore extends EventEmitter {
 
     var encodedSet = new Set();
     var encodingType = "";
+    var punctuation = "";
+    if (",.".includes(word.substr(-1))) {
+      punctuation = word.substr(-1);
+    }
     /*
     // Get synonyms from big API
     $.getJSON("http://words.bighugelabs.com/api/2/4908c06a483b07a1cdfc86f013a86d93/"+word+"/json")
@@ -160,7 +173,7 @@ class QuoteStore extends EventEmitter {
             let w = rhymeObj.word.replace(/ *\([^)]*\) */g, "");
             if (!w.toLowerCase().includes(word.toLowerCase()) && !word.toLowerCase().includes(w.toLowerCase())) {
               w = isCapitalized ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-              encodedSet.add(w);
+              encodedSet.add(w+punctuation);
             }
           });
       }
@@ -223,6 +236,18 @@ class QuoteStore extends EventEmitter {
   makeSolved() {
     this.solved = true;
     this.emit("SOLVED");
+  }
+
+  enableCheatMode() {
+    this.cheatMode = true;
+    document.getElementsByTagName("html")[0].classList.add('crosshair');
+    this.emit("ENABLE_CHEAT_MODE");
+  }
+
+  disableCheatMode() {
+    this.cheatMode = false;
+    document.getElementsByTagName("html")[0].classList.remove('crosshair');
+    this.emit("DISABLE_CHEAT_MODE");
   }
 }
 
