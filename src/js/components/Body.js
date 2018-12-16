@@ -2,7 +2,6 @@ import React from "react";
 
 import QuoteBox from "./body/QuoteBox";
 import PointBox from "./body/PointBox";
-
 import QuoteStore from "../stores/QuoteStore";
 
 export default class Body extends React.Component {

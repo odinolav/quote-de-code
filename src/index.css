@@ -134,8 +134,13 @@ sup {
   100%  {transform: scale(.1); text-shadow: 0px 0px 0px darkgray;}
 }
 
-.magicword.highlighted:hover {
+.magicword.highlighted.synonym:hover {
   background-color: rgba(200,0,0,.7);
+  color: white;
+}
+
+.magicword.highlighted.rhyme:hover {
+  background-color: rgba(0,100,250,.7);
   color: white;
 }
 

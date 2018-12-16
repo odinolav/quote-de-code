@@ -60,6 +60,12 @@ class QuoteStore extends EventEmitter {
         return {encodedArray: ["twirled", "hurled", "unfurled"], encoding: "rhyme"};
       case "them":
         return {encodedArray: ["hem", "phlegm", "gem", "lem", "femme"], encoding: "rhyme"};
+      case "strong":
+        return {encodedArray: ["powerful", "muscular", "brawny", "powerfully built", "strapping", "sturdy", "burly", "heavily built", "meaty", "robust", "athletic", "tough", "rugged"], encoding: "synonym"};
+      case "live":
+        return {encodedArray: ["survive", "walk the earth", "exist", "be alive", "be", "have life"], encoding: "synonym"};
+      case "magic":
+        return {encodedArray: ["sorcery", "witchcraft", "wizardry", "necromancy", "enchantment", "the supernatural", "occultism", "the occult", "the black arts", "voodoo", "hoodoo", "shamanism"], encoding: "synonym"};
       default: ;
     }
     if (word.length <= 3) {
