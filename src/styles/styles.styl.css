@@ -4,7 +4,7 @@
       stylus -w styles.styl -o ../styles.styl.css
 */
 .flash {
-  animation: 0.9s textflash 1;
+  animation: 1s blink 1;
 }
 .buttonalert {
   animation: 0.4s tempgrow 2;
@@ -20,6 +20,166 @@
 }
 .textpulse {
   animation: 1s textflash infinite;
+}
+@-moz-keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(0.5em);
+  }
+  75% {
+    transform: translateY(-0.5em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(0.5em);
+  }
+  75% {
+    transform: translateY(-0.5em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@-o-keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(0.5em);
+  }
+  75% {
+    transform: translateY(-0.5em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(0.5em);
+  }
+  75% {
+    transform: translateY(-0.5em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@-moz-keyframes growflash {
+  0% {
+    color: auto;
+    transform: scale(1);
+  }
+  40% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  60% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  75% {
+    color: auto;
+    transform: scale(1);
+  }
+  89% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  100% {
+    color: auto;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes growflash {
+  0% {
+    color: auto;
+    transform: scale(1);
+  }
+  40% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  60% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  75% {
+    color: auto;
+    transform: scale(1);
+  }
+  89% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  100% {
+    color: auto;
+    transform: scale(1);
+  }
+}
+@-o-keyframes growflash {
+  0% {
+    color: auto;
+    transform: scale(1);
+  }
+  40% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  60% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  75% {
+    color: auto;
+    transform: scale(1);
+  }
+  89% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  100% {
+    color: auto;
+    transform: scale(1);
+  }
+}
+@keyframes growflash {
+  0% {
+    color: auto;
+    transform: scale(1);
+  }
+  40% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  60% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  75% {
+    color: auto;
+    transform: scale(1);
+  }
+  89% {
+    color: #fff;
+    transform: scale(1.5);
+  }
+  100% {
+    color: auto;
+    transform: scale(1);
+  }
 }
 @-moz-keyframes textflash {
   0% {
@@ -137,6 +297,98 @@
     opacity: 1;
   }
 }
+@-moz-keyframes blink {
+  0% {
+    color: auto;
+  }
+  40% {
+    color: #fff;
+  }
+  60% {
+    color: #fff;
+    opacity: 1;
+  }
+  75% {
+    color: auto;
+    opacity: 0.1;
+  }
+  89% {
+    color: #fff;
+  }
+  100% {
+    color: auto;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    color: auto;
+  }
+  40% {
+    color: #fff;
+  }
+  60% {
+    color: #fff;
+    opacity: 1;
+  }
+  75% {
+    color: auto;
+    opacity: 0.1;
+  }
+  89% {
+    color: #fff;
+  }
+  100% {
+    color: auto;
+    opacity: 1;
+  }
+}
+@-o-keyframes blink {
+  0% {
+    color: auto;
+  }
+  40% {
+    color: #fff;
+  }
+  60% {
+    color: #fff;
+    opacity: 1;
+  }
+  75% {
+    color: auto;
+    opacity: 0.1;
+  }
+  89% {
+    color: #fff;
+  }
+  100% {
+    color: auto;
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    color: auto;
+  }
+  40% {
+    color: #fff;
+  }
+  60% {
+    color: #fff;
+    opacity: 1;
+  }
+  75% {
+    color: auto;
+    opacity: 0.1;
+  }
+  89% {
+    color: #fff;
+  }
+  100% {
+    color: auto;
+    opacity: 1;
+  }
+}
 @-moz-keyframes darkflash {
   50% {
     color: #000;
@@ -215,13 +467,16 @@
     text-shadow: 0px 0px 2px #a9a9a9;
   }
   10% {
+    color: #fff;
     transform: scale(3);
     text-shadow: 0px 0px 10px #000;
   }
   90% {
+    color: #fff;
     transform: scale(3);
   }
   100% {
+    color: auto;
     transform: scale(0.1);
     text-shadow: 0px 0px 0px #a9a9a9;
   }
@@ -232,13 +487,16 @@
     text-shadow: 0px 0px 2px #a9a9a9;
   }
   10% {
+    color: #fff;
     transform: scale(3);
     text-shadow: 0px 0px 10px #000;
   }
   90% {
+    color: #fff;
     transform: scale(3);
   }
   100% {
+    color: auto;
     transform: scale(0.1);
     text-shadow: 0px 0px 0px #a9a9a9;
   }
@@ -249,13 +507,16 @@
     text-shadow: 0px 0px 2px #a9a9a9;
   }
   10% {
+    color: #fff;
     transform: scale(3);
     text-shadow: 0px 0px 10px #000;
   }
   90% {
+    color: #fff;
     transform: scale(3);
   }
   100% {
+    color: auto;
     transform: scale(0.1);
     text-shadow: 0px 0px 0px #a9a9a9;
   }
@@ -266,13 +527,16 @@
     text-shadow: 0px 0px 2px #a9a9a9;
   }
   10% {
+    color: #fff;
     transform: scale(3);
     text-shadow: 0px 0px 10px #000;
   }
   90% {
+    color: #fff;
     transform: scale(3);
   }
   100% {
+    color: auto;
     transform: scale(0.1);
     text-shadow: 0px 0px 0px #a9a9a9;
   }
@@ -369,56 +633,42 @@
     transform: scale(1);
   }
 }
+@import url("https://fonts.googleapis.com/css?family=Kalam|Finger+Paint");
 html {
+  background: url("https://previews.123rf.com/images/hakkiarslan/hakkiarslan1601/hakkiarslan160100040/51690968-Colorful-wall-painting-art-inspirational-background-image--Stock-Photo.jpg") no-repeat center center fixed;
+  background-size: cover;
   font-family: sans-serif;
   user-select: none;
   cursor: default;
 }
 html,
-#layout,
-header,
-h1,
-body {
-  margin: 0px;
-  padding: 0px;
-}
-html {
-  background: url("https://previews.123rf.com/images/hakkiarslan/hakkiarslan1601/hakkiarslan160100040/51690968-Colorful-wall-painting-art-inspirational-background-image--Stock-Photo.jpg") no-repeat center center fixed;
-  background-size: cover;
-}
-html,
 body,
-#root,
-#layout {
+#root {
   height: 100%;
-  width: 100%;
-  margin: 0;
 }
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: rgba(100,200,255,0.2);
 }
 #root {
-  opacity: 0.9;
-  overflow: hidden;
-}
-@media screen and (min-width: 550px) {
-  #root {
-    margin-top: 4em;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #layout {
+  opacity: 0.9;
   display: grid;
   text-align: center;
-  max-width: 50em;
-  margin: 0 auto 0 auto;
 }
 @media screen and (max-width: 550px) {
   #layout {
+    height: 100%;
+    width: 100%;
     grid-template-areas: "header" "mainstuff" "footer";
     grid-template-columns: 1fr;
     grid-template-rows: auto;
+  }
+  #layout.keyboard-open {
+    grid-template-rows: 0 auto 0;
   }
 }
 @media screen and (min-width: 550px) {
@@ -426,20 +676,46 @@ body {
     grid-template-areas: "header" "mainstuff" "footer" "space";
     grid-template-columns: 1fr;
     grid-template-rows: 6em auto 4em auto;
+    margin-bottom: 3em;
+    max-width: 90%;
+    width: 50em;
+  }
+}
+header,
+footer {
+  font-family: cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  transition: 0.1s;
+  overflow: hidden;
+}
+@media screen and (max-width: 550px) {
+  header,
+  footer {
+    background: rgba(200,0,0,0.6);
+  }
+  .keyboard-open header,
+  .keyboard-open footer {
+    height: 0;
+    opacity: 0;
+  }
+}
+@media screen and (min-width: 550px) {
+  header,
+  footer {
+    background: linear-gradient(to right, rgba(150,0,0,0.9), rgba(200,0,0,0.6), rgba(200,0,0,0.6), rgba(150,0,0,0.9));
   }
 }
 header {
   grid-area: header;
   padding: 1em 0 0 0;
-  color: #fff;
-  background: #a1552e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 1.3em;
 }
 h1 {
   font-weight: normal;
-  font-family: cursive;
+  font-size: 1.5em;
 }
 sup {
   font-size: 0.7em;
@@ -450,29 +726,47 @@ sup {
   display: grid;
   text-align: center;
   color: #000;
-  background-color: #93badc;
 }
 @media screen and (max-width: 550px) {
   #maincontent {
-    grid-template-areas: "points points" "quotebox quotebox" "input input" "newbutton cheatbutton";
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0 1em;
-    padding: 1em 6%;
+    grid-template-areas: "quotebox quotebox quotebox" "newbutton points cheatbutton" "input input input";
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em 1em;
+  }
+  .keyboard-open #maincontent {
+    padding: 0;
+    grid-gap: 1em 0;
   }
 }
 @media screen and (min-width: 550px) {
   #maincontent {
     grid-template-areas: "points points points" "quotebox quotebox quotebox" "newbutton input cheatbutton";
+    grid-template-rows: 4em auto 4em;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-gap: 0 2.5em;
-    padding: 1em 15%;
+    grid-gap: 0 5%;
+    background: linear-gradient(to right, rgba(255,255,255,0.4), rgba(255,255,255,0), rgba(255,255,255,0), rgba(255,255,255,0.4));
+    padding: 1em 15% 2em 15%;
   }
 }
 #points {
   grid-area: points;
-  align-self: end;
-  color: #c80000;
-  margin: 0 0 1em 0;
+  font-family: 'Finger Paint', cursive;
+  color: #00051e;
+}
+@media screen and (max-width: 550px) {
+  #points {
+    align-self: center;
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+}
+@media screen and (min-width: 550px) {
+  #points {
+    align-self: center;
+    font-size: 1.4em;
+  }
 }
 .magicword {
   padding: 0 0.1em;
@@ -497,18 +791,36 @@ sup {
   color: rgba(0,100,250,0.7);
 }
 blockquote {
+  display: grid;
+  align-items: center;
   padding: 1.8em;
   grid-area: quotebox;
   align-self: center;
   text-align: left;
   line-height: 2em;
+  min-height: 5em;
   background: #fff;
   border-left: 10px solid rgba(150,0,0,0.7);
+  border-right: 0 solid rgba(150,0,0,0.7);
   quotes: "\201C" "\201D" "\2018" "\2019";
+  transition: 0.2s;
+  padding: 0.5em;
+  font-family: 'Kalam', cursive;
+  font-size: 1.2em;
 }
 @media screen and (max-width: 550px) {
   blockquote {
-    margin: 0 0 1em 0;
+    margin: 0 1em;
+    opacity: 1;
+    overflow-y: scroll;
+  }
+  .keyboard-open blockquote {
+    align-self: start;
+    margin: 0;
+    border-left: 0.3em solid #c80000;
+    border-right: 0.3em solid #c80000;
+    padding: 0.4em 0.5em;
+    height: 45vh;
   }
 }
 @media screen and (min-width: 550px) {
@@ -516,15 +828,17 @@ blockquote {
     margin: 0 0 1.5em 0;
   }
 }
-blockquote:before {
+#quotationmark {
   color: #93badc;
   font-size: 4em;
   line-height: 0.1em;
   margin-right: 0.25em;
   vertical-align: -0.4em;
 }
-blockquote::before {
-  content: open-quote;
+@media screen and (max-width: 550px) {
+  #quotationmark {
+    font-size: 3em;
+  }
 }
 blockquote small {
   font-style: italic;
@@ -546,22 +860,57 @@ h3::selection {
   transition: 0.2s;
 }
 input {
+  box-sizing: border-box;
   color: #000;
   box-shadow: 0 0 4px #000;
   text-align: center;
   border: 4px solid rgba(200,0,0,0.7);
   background-color: #fff;
-  height: 3em;
   transition: 0.2s;
+  padding: 0;
+}
+@media screen and (max-width: 550px) {
+  input {
+    margin: 0 1em;
+    font-size: 1em;
+    height: 4em;
+  }
+  .keyboard-open input {
+    margin: 0;
+    align-self: end;
+    height: 2.5em;
+  }
+}
+@media screen and (min-width: 550px) {
+  input {
+    margin: 1em;
+    font-size: 0.8em;
+  }
 }
 button {
   color: #fff;
   height: 3em;
   width: 100%;
   border: none;
-  background: rgba(200,0,0,0.7);
+  font-family: 'Kalam', cursive;
+  font-size: 1.2em;
   box-shadow: 0 0 4px #000;
   transition: 0.2s;
+  padding: 0;
+  align-self: center;
+  background: rgba(200,0,0,0.9);
+}
+@media screen and (max-width: 550px) {
+  .keyboard-open button {
+    width: 90%;
+    font-size: 1em;
+    height: 2.5em;
+  }
+}
+@media screen and (min-width: 550px) {
+  button {
+    min-width: 5em;
+  }
 }
 button:hover {
   background-color: rgba(200,0,0,0.7);
@@ -582,22 +931,18 @@ button:active {
 #infield {
   grid-area: input;
 }
-*:focus {
-  outline: none;
-}
 .crosshair {
   cursor: crosshair !important;
 }
 footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   grid-area: footer;
-  color: #fff;
-  background: #a1552e;
 }
 footer p {
   font-size: 0.8em;
-  font-family: cursive;
-  opacity: 0.5;
+  opacity: 0.8;
+}
+@media screen and (max-width: 550px) {
+  footer p {
+    font-size: 0.9em;
+  }
 }

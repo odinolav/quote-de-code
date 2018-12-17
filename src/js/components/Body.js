@@ -11,21 +11,23 @@ export default class Body extends React.Component {
 
     this.inputField = React.createRef();
     this.cheatButton = React.createRef();
+    this.container = React.createRef();
+
+    document.addEventListener("backbutton", this.inputBlur.bind(this), false);
   }
 
-  handleChange() {
+  requestNewQuote() {
     QuoteStore.newQuote();
   }
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       if (QuoteStore.solved) {
-        this.handleChange();
+        this.requestNewQuote();
       } else {
         let infield = document.getElementById("infield").value;
         infield.split(" ").forEach((attemptWord) => {
           this.quoteBox.attemptWordChange(attemptWord);
-          console.log(attemptWord);
         });
       }
       document.getElementById("infield").value = "";
@@ -37,8 +39,6 @@ export default class Body extends React.Component {
   }
 
   componentDidMount() {
-    this.inputField.current.focus();
-
     QuoteStore.on("ENABLE_CHEAT_MODE", () => {
      this.cheatButton.current.classList.add("textpulse");
     });
@@ -47,13 +47,21 @@ export default class Body extends React.Component {
     });
   }
 
+  inputFocus() {
+    document.getElementById("layout").classList.add("keyboard-open");
+  }
+
+  inputBlur() {
+    document.getElementById("layout").classList.remove("keyboard-open");
+  }
+
   render() {
     return (
-      <div id="maincontent">
+      <div id="maincontent" ref={this.container}>
         <PointBox />
         <QuoteBox ref={instance => { this.quoteBox = instance; }} />
-        <button id="newbutton" className="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
-        <input id="infield" ref={this.inputField} onKeyPress={this.handleKeyPress.bind(this)}/>
+        <button id="newbutton" className="actionbutton" onClick={this.requestNewQuote.bind(this)}>New</button>
+        <input id="infield" ref={this.inputField} onKeyPress={this.handleKeyPress.bind(this)} onFocus={this.inputFocus.bind(this)} onBlur={this.inputBlur.bind(this)}/>
         <button id="cheatbutton" ref={this.cheatButton} className="actionbutton" onClick={this.startCheatMode}>Cheat</button>
       </div>
     );

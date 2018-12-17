@@ -16,7 +16,7 @@ class PointStore extends EventEmitter {
   }
 
   solvedQuote() {
-    this.addPoints(10);
+    this.addPoints(20);
   }
 
   wrongGuess() {

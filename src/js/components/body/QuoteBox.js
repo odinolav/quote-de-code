@@ -63,8 +63,11 @@ export default class QuoteBox extends React.Component {
 
     return (
         <blockquote>
-          <span ref={instance => { this.quoteList = instance; }}>{ quoteArray }</span>
-          <small id="author">—{this.state.loadedQuote.author}</small>
+          <span>
+            <span id="quotationmark">“</span>
+            <span ref={instance => { this.quoteList = instance; }}>{ quoteArray }</span>
+            <small id="author">—{this.state.loadedQuote.author}</small>
+          </span>
         </blockquote>
     );
   }

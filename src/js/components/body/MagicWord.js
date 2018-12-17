@@ -53,9 +53,7 @@ export default class MagicWord extends React.Component {
         PointStore.wrongGuess();
       }
     }
-    document.getElementById("infield").focus();
     console.log(this.state.trueWord);
-
   }
 
   render() {

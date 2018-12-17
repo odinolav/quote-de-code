@@ -8,63 +8,71 @@
 
 @require "animations"
 @require "library"
+@import url("https://fonts.googleapis.com/css?family=Kalam|Finger+Paint")
 
-html
-  font-family: sans-serif
-  user-select: none
-  cursor: default
-
-html, #layout, header, h1, body
-  margin: 0px
-  padding: 0px
 
 html
   background: url("https://previews.123rf.com/images/hakkiarslan/hakkiarslan1601/hakkiarslan160100040/51690968-Colorful-wall-painting-art-inspirational-background-image--Stock-Photo.jpg") no-repeat center center fixed
   background-size: cover
+  font-family: sans-serif
+  user-select: none
+  cursor: default
 
-html, body, #root, #layout
+html, body, #root
   height: 100%
-  width: 100%
-  margin: 0
 
 body
-  display: flex
-  justify-content: center
-  align-items: center
+  background: rgba(100,200,255,.2)
 
 #root
-  opacity: .9
-  overflow: hidden
-  @media $tabletUp
-    margin-top: 4em
+  display: flex
+  align-items: center
+  justify-content: center
 
 #layout
+  opacity: .9
   display: grid
   text-align: center
-  max-width: 50em
-  margin: 0 auto 0 auto
   @media $mobile
+    height: 100%
+    width: 100%
     grid-template-areas: "header" "mainstuff" "footer"
     grid-template-columns: 1fr
     grid-template-rows: auto
+    &.keyboard-open
+      grid-template-rows: 0 auto 0
   @media $tabletUp
     grid-template-areas: "header" "mainstuff" "footer" "space"
     grid-template-columns: 1fr
     grid-template-rows: 6em auto 4em auto
+    margin-bottom: 3em
+    max-width: 90%
+    width: 50em
+
+header, footer
+  font-family: cursive
+  display: flex
+  justify-content: center
+  align-items: center
+  color: white
+  transition: .1s
+  overflow: hidden
+  @media $mobile
+    background: rgba(200,0,0,.6)
+    .keyboard-open &
+      height: 0
+      opacity: 0
+  @media $tabletUp
+    background: linear-gradient(to right, rgba(150,0,0,.9), rgba(200,0,0,.6), rgba(200,0,0,.6), rgba(150,0,0,.9))
 
 header
   grid-area: header
   padding: 1em 0 0 0
-  color: white
-  background: #A1552E
-  display: flex
-  align-items: center
-  justify-content: center
-
+  font-size: 1.3em
 
 h1
   font-weight: normal
-  font-family: cursive
+  font-size: 1.5em
 
 sup
   font-size : .7em
@@ -75,23 +83,34 @@ sup
   display: grid
   text-align: center
   color: black
-  background-color: #93BADC
   @media $mobile
-    grid-template-areas: "points points" "quotebox quotebox" "input input" "newbutton cheatbutton"
-    grid-template-columns: 1fr 1fr
-    grid-gap: 0 1em
-    padding: 1em 6%
+    grid-template-areas: "quotebox quotebox quotebox" "newbutton points cheatbutton" "input input input"
+    grid-template-rows: auto
+    grid-template-columns: 1fr 1fr 1fr
+    grid-gap: 1em 1em
+    .keyboard-open &
+      padding: 0
+      grid-gap: 1em 0
   @media $tabletUp
     grid-template-areas: "points points points" "quotebox quotebox quotebox" "newbutton input cheatbutton"
+    grid-template-rows: 4em auto 4em
     grid-template-columns: 1fr 2fr 1fr
-    grid-gap: 0 2.5em
-    padding: 1em 15%
+    grid-gap: 0 5%
+    background: linear-gradient(to right, rgba(255,255,255,.4), rgba(255,255,255,0), rgba(255,255,255,0), rgba(255,255,255,.4))
+    padding: 1em 15% 2em 15%
 
 #points
   grid-area: points
-  align-self: end
-  color: rgb(200,0,0)
-  margin: 0 0 1em 0
+  font-family: 'Finger Paint', cursive;
+  color: rgb(0,5,30)
+  @media $mobile
+    align-self: center
+    margin: 0
+    font-size: 1.3em
+    font-weight: bold
+  @media $tabletUp
+    align-self: center
+    font-size: 1.4em
 
 .magicword
   padding: 0 .1em
@@ -116,28 +135,45 @@ sup
   color: rgba(0,100,250,.7)
 
 blockquote
+  display: grid
+  align-items: center
   padding: 1.8em
   grid-area: quotebox
   align-self: center
   text-align: left
   line-height: 2em
+  min-height: 5em
   background: white
   border-left: 10px solid rgba(150,0,0,.7)
+  border-right: 0 solid rgba(150,0,0,.7)
   quotes: "\201C""\201D""\2018""\2019"
+  transition: .2s
+  padding: .5em
+  font-family: 'Kalam', cursive
+  font-size: 1.2em
   @media $mobile
-    margin: 0 0 1em 0
+    margin: 0 1em
+    opacity: 1
+    overflow-y: scroll
+    .keyboard-open &
+      align-self: start
+      margin: 0
+      border-left: .3em solid rgb(200,0,0)
+      border-right: .3em solid rgb(200,0,0)
+      padding: .4em .5em
+      height: 45vh
   @media $tabletUp
     margin: 0 0 1.5em 0
 
-blockquote:before
+#quotationmark
   color: #93BADC
   font-size: 4em
   line-height: .1em
   margin-right: 0.25em
   vertical-align: -0.4em
+  @media $mobile
+    font-size: 3em
 
-blockquote::before
-  content: open-quote
 
 blockquote small
   font-style: italic
@@ -154,74 +190,78 @@ h3
   font-weight: lighter
   max-width: 100%
 
-
 h3::selection
   background-color: rgba(150,0,0,.7)
   transition: .2s
 
-
 input
+  box-sizing: border-box
   color: black
   box-shadow: 0 0 4px black
   text-align: center
   border: 4px solid rgba(200,0,0,.7)
   background-color: white
-  height: 3em
   transition: .2s
-
+  padding: 0
+  @media $mobile
+    margin: 0 1em
+    font-size: 1em
+    height: 4em
+    .keyboard-open &
+      margin: 0
+      align-self: end
+      height: 2.5em
+  @media $tabletUp
+    margin: 1em
+    font-size: .8em
 
 button
   color: white
   height: 3em
   width: 100%
   border: none
-  background: rgba(200,0,0,.7)
+  font-family: 'Kalam', cursive;
+  font-size: 1.2em
   box-shadow: 0 0 4px black
   transition: .2s
-
+  padding: 0
+  align-self: center
+  background: rgba(200,0,0,.9)
+  @media $mobile
+    .keyboard-open &
+      width: 90%
+      font-size: 1em
+      height: 2.5em
+  @media $tabletUp
+    min-width: 5em
 
 button:hover
   background-color: rgba(200,0,0,.7)
   box-shadow: 0 0 8px 0 black
   cursor: pointer
 
-
 button:active
   background-color: rgba(255,0,0,.7)
-
 
 #newbutton
   grid-area: newbutton
   justify-self: left
 
-
 #cheatbutton
   grid-area: cheatbutton
   justify-self: right
 
-
 #infield
   grid-area: input
-
-
-*:focus
-    outline: none
-
 
 .crosshair
   cursor: crosshair !important
 
-
 footer
-  display: flex
-  justify-content: center
-  align-items: center
   grid-area: footer
-  color: white
-  background: #A1552E
-
 
 footer p
   font-size: .8em
-  font-family: cursive
-  opacity: .5
+  opacity: .8
+  @media $mobile
+    font-size: .9em
