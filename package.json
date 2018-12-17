@@ -3,14 +3,12 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
-    "events": "3.0.0",
     "jquery": "^3.3.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
     "rhymes": "^1.0.2",
-    "synonyms": "^1.0.1",
-    "webpack": "^4.19.1"
+    "synonyms": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

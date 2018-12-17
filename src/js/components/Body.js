@@ -6,6 +6,13 @@ import QuoteStore from "../stores/QuoteStore";
 
 export default class Body extends React.Component {
 
+  constructor() {
+    super();
+
+    this.inputField = React.createRef();
+    this.cheatButton = React.createRef();
+  }
+
   handleChange() {
     QuoteStore.newQuote();
   }
@@ -30,7 +37,14 @@ export default class Body extends React.Component {
   }
 
   componentDidMount() {
-   this.inputField.focus();
+    this.inputField.current.focus();
+
+    QuoteStore.on("ENABLE_CHEAT_MODE", () => {
+     this.cheatButton.current.classList.add("textpulse");
+    });
+    QuoteStore.on("DISABLE_CHEAT_MODE", () => {
+     this.cheatButton.current.classList.remove("textpulse");
+    });
   }
 
   render() {
@@ -39,8 +53,8 @@ export default class Body extends React.Component {
         <PointBox />
         <QuoteBox ref={instance => { this.quoteBox = instance; }} />
         <button id="newbutton" className="actionbutton" onClick={this.handleChange.bind(this)}>New</button>
-        <input id="infield" ref={input => { this.inputField = input; }} onKeyPress={this.handleKeyPress.bind(this)}/>
-        <button id="cheatbutton" className="actionbutton" onClick={this.startCheatMode}>Cheat</button>
+        <input id="infield" ref={this.inputField} onKeyPress={this.handleKeyPress.bind(this)}/>
+        <button id="cheatbutton" ref={this.cheatButton} className="actionbutton" onClick={this.startCheatMode}>Cheat</button>
       </div>
     );
   }

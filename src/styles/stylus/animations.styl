@@ -1,0 +1,88 @@
+/*
+  Implementations
+*/
+
+.flash
+  animation: .9s textflash 1
+.buttonalert
+  animation: .4s tempgrow 2
+.darkflash
+  animation: .3s darkflash 2
+.cheat-word
+  animation: 1.5s shrinkgrow
+.wiggle
+  animation: .2s wiggle
+.textpulse
+  animation: 1s textflash infinite
+
+/*
+  Animation configurations
+*/
+
+@keyframes textflash
+      0%
+        color: auto
+        letter-spacing: normal
+      40%
+        color: white
+        letter-spacing: .4em
+      60%
+        color: white
+        letter-spacing: .4em
+        opacity: 1
+      75%
+        color: auto
+        letter-spacing: normal
+        opacity: .1
+      89%
+        color: white
+        letter-spacing: .4em
+      100%
+        color: auto
+        letter-spacing: normal
+        opacity: 1
+
+@keyframes darkflash
+      50%
+        color: black
+        opacity: .1
+      100%
+        color: auto
+        opacity: 1
+
+@keyframes wiggle
+      from
+        transform: rotate(-360deg)
+      to
+        transform: rotate(0deg)
+
+@keyframes shrinkgrow
+      0%
+        transform: scale(.1)
+        text-shadow: 0px 0px 2px darkgray
+      10%
+        transform: scale(3)
+        text-shadow: 0px 0px 10px black
+      90%
+        transform: scale(3)
+      100%
+        transform: scale(.1)
+        text-shadow: 0px 0px 0px darkgray
+
+@keyframes fadein
+      0%
+        color: black
+        opacity:0
+        text-shadow: 0px 4px gray
+      100%
+        color: white
+        opacity:1
+        text-shadow: none
+
+@keyframes tempgrow
+      0%
+        transform: scale(1)
+      50%
+        transform: scale(1.5)
+      100%
+        transform: scale(1)
