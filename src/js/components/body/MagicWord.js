@@ -19,12 +19,13 @@ export default class MagicWord extends React.Component {
   }
 
   componentDidMount() {
-    QuoteStore.on("UPDATE_QUOTE@"+this.state.index, () => {
-      PointStore.gotWord();
-      this.setState({
-        displayWord: QuoteStore.getDisplayWord(this.state.index),
-        classes: 'wiggle'
-      });
+
+    QuoteStore.on("GUESS_WORD", (inWord) => {
+      if (inWord.toLowerCase() === this.state.trueWord.toLowerCase()) {
+        PointStore.gotWord();
+        QuoteStore.solveWordAtIndex(this.state.index);
+        this.reveal();
+      }
     });
 
     QuoteStore.on("ENABLE_CHEAT_MODE", () => {
@@ -36,12 +37,19 @@ export default class MagicWord extends React.Component {
     });
   }
 
-  click() {
+  reveal() {
+    this.setState({
+      displayWord: this.state.trueWord,
+      classes: 'wiggle'
+    });
+  }
 
+  click() {
     if (QuoteStore.cheatMode) {
       this.setState({otherClasses: "cheat-word"});
       PointStore.cheat();
-      QuoteStore.revealAtIndex(this.state.index);
+      this.reveal();
+      QuoteStore.solveWordAtIndex(this.state.index);
       QuoteStore.disableCheatMode();
     } else {
       var synonyms = this.state.encoded;
@@ -53,7 +61,6 @@ export default class MagicWord extends React.Component {
         PointStore.wrongGuess();
       }
     }
-    console.log(this.state.trueWord);
   }
 
   render() {
@@ -65,7 +72,10 @@ export default class MagicWord extends React.Component {
     }
 
     return (
-      <span className={this.state.otherClasses + " " + this.state.classes + " magicword " + color} onClick={this.click.bind(this)}>{this.state.displayWord}</span>
+      <span className={this.state.otherClasses + " " + this.state.classes + " magicword " + color}
+            onClick={this.click.bind(this)}>
+        {this.state.displayWord}
+      </span>
     );
   }
 }

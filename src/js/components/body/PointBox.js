@@ -22,6 +22,7 @@ export default class PointBox extends React.Component {
       this.pointText.classList.add("darkflash");
     });
     QuoteStore.on("SOLVED", () => {
+      PointStore.solvedQuote();
       this.pointText.classList.add("flash");
     });
     QuoteStore.on("NEW_QUOTE", () => {

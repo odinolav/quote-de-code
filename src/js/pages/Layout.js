@@ -8,7 +8,7 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <div id="layout">
+      <div id="layout" className="fadein">
         <Header />
         <Body />
         <Footer />

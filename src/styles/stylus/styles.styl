@@ -1,9 +1,7 @@
-// out: ../$1.$2.css, sourcemap: true, compress: true
-
 /*
-  This file, as specified by the first line, compiles to ../styles.styl.css, to be used in index.js
-  command to continuously compile:
-      stylus -w styles.styl -o ../styles.styl.css
+  This file compiles to ../styles.css, to be used in index.js
+  Autocompile with npm start
+      uses: stylus -w styles.styl -o ../styles.css
 */
 
 @require "animations"
@@ -12,11 +10,12 @@
 
 
 html
-  background: url("https://previews.123rf.com/images/hakkiarslan/hakkiarslan1601/hakkiarslan160100040/51690968-Colorful-wall-painting-art-inspirational-background-image--Stock-Photo.jpg") no-repeat center center fixed
+  background: url("../brickwall.jpg") no-repeat center center fixed
   background-size: cover
   font-family: sans-serif
   user-select: none
   cursor: default
+  transition: .1s
 
 html, body, #root
   height: 100%
@@ -33,6 +32,7 @@ body
   opacity: .9
   display: grid
   text-align: center
+  transition: .1s
   @media $mobile
     height: 100%
     width: 100%
@@ -50,7 +50,7 @@ body
     width: 50em
 
 header, footer
-  font-family: cursive
+  font-family: 'Kalam', cursive
   display: flex
   justify-content: center
   align-items: center
@@ -102,7 +102,8 @@ sup
 #points
   grid-area: points
   font-family: 'Finger Paint', cursive;
-  color: rgb(0,5,30)
+  color: rgb(0,0,10)
+  text-shadow: 1px 1px 6px white
   @media $mobile
     align-self: center
     margin: 0
@@ -116,6 +117,7 @@ sup
   padding: 0 .1em
   font-size: 1.2em
   transition: .2s
+  transition: .3s
 
 .magicword.highlighted.synonym:hover
   background-color: rgba(200,0,0,.7)
@@ -155,6 +157,7 @@ blockquote
     margin: 0 1em
     opacity: 1
     overflow-y: scroll
+    min-height: 25vh
     .keyboard-open &
       align-self: start
       margin: 0
@@ -165,22 +168,21 @@ blockquote
   @media $tabletUp
     margin: 0 0 1.5em 0
 
-#quotationmark
+.quotationmark
+  transform: translateY(.3em);
   color: #93BADC
-  font-size: 4em
-  line-height: .1em
-  margin-right: 0.25em
-  vertical-align: -0.4em
+  font-size: 1.5em
+  transition: .1s
   @media $mobile
-    font-size: 3em
-
+    font-size: 2em
 
 blockquote small
   font-style: italic
   color: #93BADC
 
 #author
-  display: inline-block
+  display: block
+  font-size: .8em
 
 blockquote span
   display: inline-block

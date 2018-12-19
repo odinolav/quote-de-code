@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 
-import $ from 'jquery';
 import synonyms from "synonyms";
 import rhymes from "rhymes";
+import allQuotes from '../../allQuotes.js';
 
 class QuoteStore extends EventEmitter {
   constructor() {
@@ -16,6 +16,7 @@ class QuoteStore extends EventEmitter {
     this.solved = false;
     this.cheatMode = false;
     this.author = "James Miller";
+    this.currentQuoteIndex = -1;
   }
 
   encodeQuote(word) {
@@ -75,84 +76,9 @@ class QuoteStore extends EventEmitter {
     var encodedSet = new Set();
     var encodingType = "";
     var punctuation = "";
-    if (",.".includes(word.substr(-1))) {
+    if (",.;:".includes(word.substr(-1))) {
       punctuation = word.substr(-1);
     }
-    /*
-    // Get synonyms from big API
-    $.getJSON("http://words.bighugelabs.com/api/2/4908c06a483b07a1cdfc86f013a86d93/"+word+"/json")
-    .done((response) => {
-      console.log(response);
-      if (Object.keys(response).length >= 1) {
-        console.log("WOW A WORD OBJ");
-        console.log(word);
-        Object.keys(response).forEach((cat) => {
-          if (response[cat].syn) {
-            response[cat].syn.forEach((w) => {
-              console.log("IMPORTANT UNDER HERE");
-              console.log(w);
-              if (w !== word.toLowerCase() && w.length > 2) {
-                synonymSet.add(w);
-                console.log("New synonym!!!!", w);
-              }
-            });
-          }
-        });
-      }
-
-      // Get synonyms from weak js library
-      var wordObj = synonyms(word);
-      console.log(wordObj);
-      if (wordObj) {
-        for (var cat of Object.keys(wordObj)) {
-          for (let w of wordObj[cat]) {
-            if (w !== word.toLowerCase() && w.length > 2) {
-              synonymSet.add(w);
-              console.log("New synonym!!!!", w);
-            }
-          }
-        }
-      }
-      var synonymArray = [...synonymSet];
-      var swappedWord = (synonymArray.length ? self.chooseRandomDisplayWord(synonymArray) : word);
-      this.quote.push(
-        {
-          displayWord: swappedWord,
-          synonyms: synonymArray,
-          trueWord: word
-        }
-      );
-      this.emit("change");
-    });
-    */
-
-    /*
-    fetch("http://api.datamuse.com/words?rel_syn="+word)
-    .then(response => response.json())
-    .then(data => {
-      console.log(word);
-      console.log("Data from here:");
-      console.log(data);
-
-      var isCapitalized = word.charAt(0) === word.charAt(0).toUpperCase();
-      if (data && data.length >= 1) {
-        console.log("WE IN HERRRR");
-        data.forEach((wordObj, i) => {
-          let potentialWord = wordObj.word;
-          if (potentialWord.length > 2) {
-            // Check for synonyms in lowercase and only if they are longer than two letters
-            let w = isCapitalized ? potentialWord.charAt(0).toUpperCase() + potentialWord.slice(1) : potentialWord;
-            if (!w.includes(word)) {
-              synonymSet.add(w);
-              console.log("added!!!!!!!!!!!");
-            }
-          }
-        });
-        console.log(synonymSet);
-      }
-      return [...synonymSet];
-    });
-  }*/
 
     // Get synonyms from weak js library
     var wordObj = synonyms(word);
@@ -190,11 +116,15 @@ class QuoteStore extends EventEmitter {
   newQuote() {
     this.solved = false;
     var self = this;
-    $.getJSON("https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?")
-    .done((response) => {
+      let randI = Math.floor(Math.random() * parseInt(allQuotes[0]));
+      if (randI === this.currentQuoteIndex) {
+        randI -= 1;
+      }
+      let data = allQuotes[randI];
+      console.log(randI);
+      console.log(data);
       self.quote = [];
-      response.quoteText.split(" ").forEach((responseWord, i) => {
-        responseWord = responseWord.replace('"', '/"');
+      data[0].split(" ").forEach((responseWord, i) => {
         var encodingObj = this.encodeQuote(responseWord);
         var {encodedArray, encoding} = encodingObj;
         self.quote.push(
@@ -206,21 +136,34 @@ class QuoteStore extends EventEmitter {
           }
         );
       });
-      // Assign new quote's author to response author, or "unknown" if not specified
-      self.author = response.quoteAuthor ? response.quoteAuthor : "unknown";
+      self.author = data[1];
       self.emit("NEW_QUOTE");
-    })
-    .fail(() => {console.log("New quote error")});
+  }
+
+  checkForSolve() {
+    // Checking to see if completely solved
+    let allGood = true;
+    for (let word of this.quote) {
+      if (word.trueWord !== word.displayWord) {
+        allGood = false;
+      }
+    }
+    if (allGood) {
+      this.makeSolved();
+    }
+  }
+
+  guessWord(inWord) {
+    this.emit("GUESS_WORD", inWord);
   }
 
   getAll() {
     return {id: this.id, quote: this.quote, author: this.author};
   }
 
-  revealAtIndex(i) {
-    console.log("UPDATE_QUOTE@"+i);
+  solveWordAtIndex(i) {
     this.quote[i].displayWord = this.quote[i].trueWord;
-    this.emit("UPDATE_QUOTE@"+i);
+    this.checkForSolve();
   }
 
   getDisplayWord(index) {

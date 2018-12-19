@@ -17,6 +17,7 @@ export default class Body extends React.Component {
   }
 
   requestNewQuote() {
+    this.inputFocus();
     QuoteStore.newQuote();
   }
 
@@ -27,7 +28,7 @@ export default class Body extends React.Component {
       } else {
         let infield = document.getElementById("infield").value;
         infield.split(" ").forEach((attemptWord) => {
-          this.quoteBox.attemptWordChange(attemptWord);
+          QuoteStore.guessWord(attemptWord);
         });
       }
       document.getElementById("infield").value = "";
@@ -35,6 +36,7 @@ export default class Body extends React.Component {
   }
 
   startCheatMode() {
+    this.inputFocus();
     QuoteStore.enableCheatMode();
   }
 
@@ -45,9 +47,13 @@ export default class Body extends React.Component {
     QuoteStore.on("DISABLE_CHEAT_MODE", () => {
      this.cheatButton.current.classList.remove("textpulse");
     });
+    QuoteStore.on("SOLVED", () => {
+      document.getElementById("newbutton").classList.add("buttonalert");
+    });
   }
 
   inputFocus() {
+    this.inputField.current.focus();
     document.getElementById("layout").classList.add("keyboard-open");
   }
 
@@ -59,10 +65,10 @@ export default class Body extends React.Component {
     return (
       <div id="maincontent" ref={this.container}>
         <PointBox />
-        <QuoteBox ref={instance => { this.quoteBox = instance; }} />
-        <button id="newbutton" className="actionbutton" onClick={this.requestNewQuote.bind(this)}>New</button>
+        <QuoteBox />
+        <button id="newbutton" className="actionbutton" onClick={this.requestNewQuote.bind(this)} onFocus={this.inputFocus.bind(this)}>New</button>
         <input id="infield" ref={this.inputField} onKeyPress={this.handleKeyPress.bind(this)} onFocus={this.inputFocus.bind(this)} onBlur={this.inputBlur.bind(this)}/>
-        <button id="cheatbutton" ref={this.cheatButton} className="actionbutton" onClick={this.startCheatMode}>Cheat</button>
+        <button id="cheatbutton" ref={this.cheatButton} className="actionbutton" onClick={this.startCheatMode.bind(this)} onFocus={this.inputFocus.bind(this)}>Cheat</button>
       </div>
     );
   }
