@@ -119,22 +119,29 @@ sup
   transition: .2s
   transition: .3s
 
-.magicword.highlighted.synonym:hover
-  background-color: rgba(200,0,0,.7)
+.magicword.highlighted:hover
   color: white
 
+.magicword.highlighted.synonym:hover
+  background-color: $c-synonym
+
 .magicword.highlighted.rhyme:hover
-  background-color: rgba(0,100,250,.7)
-  color: white
+  background-color: $c-rhyme
+
+.magicword.highlighted.antonym:hover
+  background-color: $c-antonym
 
 .magicword.highlighted
   cursor: pointer
 
 .magicword.highlighted.synonym
-  color: rgba(200,0,0,.7)
+  color: $c-synonym
 
 .magicword.highlighted.rhyme
-  color: rgba(0,100,250,.7)
+  color: $c-rhyme
+
+.magicword.highlighted.antonym
+  color: $c-antonym
 
 blockquote
   display: grid
@@ -158,6 +165,7 @@ blockquote
     opacity: 1
     overflow-y: scroll
     min-height: 25vh
+    max-height: 50vh
     .keyboard-open &
       align-self: start
       margin: 0

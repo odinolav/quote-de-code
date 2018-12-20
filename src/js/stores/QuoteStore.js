@@ -1,149 +1,313 @@
-import { EventEmitter } from "events";
+import {
+  EventEmitter
+} from "events";
 
-import synonyms from "synonyms";
-import rhymes from "rhymes";
 import allQuotes from '../../allQuotes.js';
 
 class QuoteStore extends EventEmitter {
   constructor() {
     super();
     this.id = 12345;
-    this.quote = [
-      {displayWord: "Them", trueWord: "These", encoded: ["These here", "Them"], encoding: "synonym"},
-      {displayWord: "quotations", trueWord: "quotes", encoded: ["quotations", "citations"], encoding: "synonym"},
-      {displayWord: "stone.", trueWord: "rock", encoded: ["stone", "hard object"], encoding: "synonym"}
-    ];
+    this.quote = {
+      0: {
+        displayWord: "Fix the quotes! Red means synonym, yellow means antonym, and blue means rhyme. Click New to begin!",
+        trueWord: "Fix the quotes! Red means synonym, yellow means antonym, and blue means rhyme. Click New to begin!",
+        encoded: [],
+        encoding: ""
+      },
+    };
+    this.fullLength = 1;
+    this.currentLength = 1;
     this.solved = false;
     this.cheatMode = false;
     this.author = "James Miller";
     this.currentQuoteIndex = -1;
+    this.codes = {
+      rhyme: "rhyme",
+      synonym: "synonym",
+      antonym: "antonym"
+    }
   }
 
-  encodeQuote(word) {
-    switch(word) {
+  encodeWord(i, word) {
+    let self = this;
+    switch (word) {
       case "a" || "an":
-        return {encodedArray: ["a", "an", "one"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["a", "an", "one"],
+          encoding: "synonym"
+        }, word); break;
       case "be":
-        return {encodedArray: ["exist", "abide", "act"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["exist", "abide", "act"],
+          encoding: "synonym"
+        }, word); break;
       case "has":
-        return {encodedArray: ["bears", "carries", "contains", "posesses"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["bears", "carries", "contains", "posesses"],
+          encoding: "synonym"
+        }, word); break;
       case "foolish":
-        return {encodedArray: ["stupid", "dumb", "irrational", "ludicrous", "silly", "unreasonable"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["stupid", "dumb", "irrational", "ludicrous", "silly", "unreasonable"],
+          encoding: "synonym"
+        }, word); break;
       case "forget":
-        return {encodedArray: ["disremember", "fail to remember"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["disremember", "fail to remember"],
+          encoding: "synonym"
+        }, word); break;
       case "have":
-        return {encodedArray: ["bear", "carry", "contain", "posess"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["bear", "carry", "contain", "posess"],
+          encoding: "synonym"
+        }, word); break;
       case "hear":
-        return {encodedArray: ["listen", "overhear", "apprehend", "make out"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["listen", "overhear", "apprehend", "make out"],
+          encoding: "synonym"
+        }, word); break;
       case "joy":
-        return {encodedArray: ["happiness", "amusement", "bliss", "cheer", "pride", "satisfaction"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["happiness", "amusement", "bliss", "cheer", "pride", "satisfaction"],
+          encoding: "synonym"
+        }, word); break;
       case "look":
-        return {encodedArray: ["gaze", "peek", "glance", "review", "stare"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["gaze", "peek", "glance", "review", "stare"],
+          encoding: "synonym"
+        }, word); break;
       case "love":
-        return {encodedArray: ["passion", "yearning", "devotion"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["passion", "yearning", "devotion"],
+          encoding: "synonym"
+        }, word); break;
       case "many":
-        return {encodedArray: ["numerous", "profuse", "abundant"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["numerous", "profuse", "abundant"],
+          encoding: "synonym"
+        }, word); break;
       case "will":
-        return {encodedArray: ["shall", "tend to", "have a tendency to", "are going to", "must", "resolution", "resolve"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["shall", "tend to", "have a tendency to", "are going to", "must", "resolution", "resolve"],
+          encoding: "synonym"
+        }, word); break;
       case "wish":
-        return {encodedArray: ["ambition", "aspiration", "hope", "inclination", "yearning", "desire", "will that"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["ambition", "aspiration", "hope", "inclination", "yearning", "desire", "will that"],
+          encoding: "synonym"
+        }, word); break;
       case "see":
-        return {encodedArray: ["view", "detect", "understand", "watch", "behold"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["view", "detect", "understand", "watch", "behold"],
+          encoding: "synonym"
+        }, word); break;
       case "seem":
-        return {encodedArray: ["imply", "look", "give the feeling of"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["imply", "look", "give the feeling of"],
+          encoding: "synonym"
+        }, word); break;
       case "seems":
-        return {encodedArray: ["implies", "looks", "gives the feeling of"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["implies", "looks", "gives the feeling of"],
+          encoding: "synonym"
+        }, word); break;
       case "make":
-        return {encodedArray: ["construct", "build", "assemble", "put together", "manufacture", "produce", "fabricate", "create", "form", "fashion", "model"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["construct", "build", "assemble", "put together", "manufacture", "produce", "fabricate", "create", "form", "fashion", "model"],
+          encoding: "synonym"
+        }, word); break;
       case "better":
-        return {encodedArray: ["superior", "finer", "of higher quality", "healthier", "surpass", "beat"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["superior", "finer", "of higher quality", "healthier", "surpass", "beat"],
+          encoding: "synonym"
+        }, word); break;
       case "world":
-        return {encodedArray: ["twirled", "hurled", "unfurled"], encoding: "rhyme"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["twirled", "hurled", "unfurled"],
+          encoding: "rhyme"
+        }, word); break;
       case "them":
-        return {encodedArray: ["hem", "phlegm", "gem", "lem", "femme"], encoding: "rhyme"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["hem", "phlegm", "gem", "lem", "femme"],
+          encoding: "rhyme"
+        }, word); break;
       case "strong":
-        return {encodedArray: ["powerful", "muscular", "brawny", "powerfully built", "strapping", "sturdy", "burly", "heavily built", "meaty", "robust", "athletic", "tough", "rugged"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["powerful", "muscular", "brawny", "powerfully built", "strapping", "sturdy", "burly", "heavily built", "meaty", "robust", "athletic", "tough", "rugged"],
+          encoding: "synonym"
+        }, word); break;
       case "live":
-        return {encodedArray: ["survive", "walk the earth", "exist", "be alive", "be", "have life"], encoding: "synonym"};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["survive", "walk the earth", "exist", "be alive", "be", "have life"],
+          encoding: "synonym"
+        }, word); break;
       case "magic":
-        return {encodedArray: ["sorcery", "witchcraft", "wizardry", "necromancy", "enchantment", "the supernatural", "occultism", "the occult", "the black arts", "voodoo", "hoodoo", "shamanism"], encoding: "synonym"};
-      default: ;
-    }
-    if (word.length <= 3) {
-      return {encodedArray: [], encoding: ""};
+        this.pushNewWordToQuote(i, {
+          encodedArray: ["sorcery", "witchcraft", "wizardry", "necromancy", "enchantment", "the supernatural", "occultism", "the occult", "the black arts", "voodoo", "hoodoo", "shamanism"],
+          encoding: "synonym"
+        }, word); break;
+      default:
+        break;
     }
 
+    if (word.length <= 3) {
+
+      let encodingObj = self.makeEncodingObj([], '');
+      this.pushNewWordToQuote(i, encodingObj, word);
+    }
+
+    /*
+    // For handling punctuation
     var encodedSet = new Set();
     var encodingType = "";
     var punctuation = "";
     if (",.;:".includes(word.substr(-1))) {
       punctuation = word.substr(-1);
     }
+    */
 
-    // Get synonyms from weak js library
-    var wordObj = synonyms(word);
-    var isCapitalized = word.charAt(0) === word.charAt(0).toUpperCase();
-    if (wordObj) {
-      encodingType = "synonym";
-      for (var cat of Object.keys(wordObj)) {
-        for (let w of wordObj[cat]) {
-          // Check for synonyms in lowercase and only if they are longer than two letters
-          if (!w.toLowerCase().includes(word.toLowerCase()) && !word.toLowerCase().includes(w.toLowerCase()) && w.length > 2) {
-            w = isCapitalized ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-            encodedSet.add(w);
-          }
-        }
-      }
-    } else {
-      // If no synonyms found, chance of encoding word with rhyme instead
-      if (Math.random() > .3) {
-          let rhymingObj = rhymes(word);
-          if (rhymingObj) {
-            encodingType = "rhyme";
-          }
-          rhymingObj.forEach((rhymeObj, i) => {
-            let w = rhymeObj.word.replace(/ *\([^)]*\) */g, "");
-            if (!w.toLowerCase().includes(word.toLowerCase()) && !word.toLowerCase().includes(w.toLowerCase())) {
-              w = isCapitalized ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-              encodedSet.add(w+punctuation);
-            }
-          });
-      }
+
+    let randChance = Math.random();
+    if (randChance > .5) {           // 30% chance of attempting synonym
+      self.wordAPICall('synonym', word, i);
+    } else if (randChance > .2) {   // 30% chance of attempting antonym
+      self.wordAPICall('antonym', word, i);
+    } else {                        // 40% chance of attempting rhyme
+      self.wordAPICall('rhyme', word, i);
     }
-    return {encodedArray: [...encodedSet], encoding: encodingType};
   }
 
-  newQuote() {
-    this.solved = false;
-    var self = this;
-      let randI = Math.floor(Math.random() * parseInt(allQuotes[0]));
-      if (randI === this.currentQuoteIndex) {
-        randI -= 1;
-      }
-      let data = allQuotes[randI];
-      console.log(randI);
-      console.log(data);
-      self.quote = [];
-      data[0].split(" ").forEach((responseWord, i) => {
-        var encodingObj = this.encodeQuote(responseWord);
-        var {encodedArray, encoding} = encodingObj;
-        self.quote.push(
-          {
-            displayWord: encodedArray.length ? encodedArray[Math.floor(Math.random()*encodedArray.length)] : responseWord,
-            trueWord: responseWord,
-            encoded: encodedArray,
-            encoding: encoding
+  wordAPICall(code, word, i) {
+    let self = this;
+    // Use code from this.encodedSet
+    let rel = '';
+    if (code === 'rhyme') {
+      rel = 'rhy';
+    } else if (code === 'synonym') {
+      rel = 'syn';
+    } else if (code === 'antonym') {
+      rel = 'ant';
+    } else {
+      console.log("Undefined code in wordAPICall()");
+    }
+    fetch(`https://api.datamuse.com/words?&rel_${rel}=${word}&max=10`)
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Datamuse API problem. Status Code: ' +
+              response.status);
+            return;
           }
-        );
+
+          let capitalized = word.charAt(0) === word.charAt(0).toUpperCase();
+
+          response.json().then(function(data) {
+            let rhymeArray = [];
+            for (let row of data) {
+              if (capitalized) {
+                let capitalizedEncodedWord = row.word.charAt(0).toUpperCase() + row.word.slice(1);
+                rhymeArray.push(capitalizedEncodedWord);
+              } else {
+                rhymeArray.push(row.word);
+              }
+            }
+
+            let encodingObj = self.makeEncodingObj(rhymeArray, self.codes[code]);
+            self.pushNewWordToQuote(i, encodingObj, word);
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log(`Error trying to fetch ${code}:`, err);
+        let encodingObj = self.makeEncodingObj([], '');
+        self.pushNewWordToQuote(i, encodingObj, word);
       });
-      self.author = data[1];
-      self.emit("NEW_QUOTE");
+  }
+
+  hardcodeNewQuote(text, author) {
+    this.solved = false;
+    this.quote = {};
+    this.fullLength = 0;
+    this.currentLength = 0;
+    let quoteText = text;
+    this.author = author
+    let quoteWords = quoteText.split(" ");
+    this.fullLength = quoteWords.length;
+    quoteWords.forEach((responseWord, i) => {
+      var encodingObj;
+      // 70% probability that a word will be encoded
+      if (Math.random() > .3) {
+        this.encodeWord(i, responseWord);
+      } else {
+        encodingObj = this.makeEncodingObj([], '');
+        this.pushNewWordToQuote(i, encodingObj, responseWord);
+      }
+    });
+  }
+
+  startNewQuote() {
+    this.solved = false;
+    this.quote = {};
+    this.fullLength = 0;
+    this.currentLength = 0;
+    let randQuoteIndex = Math.floor(Math.random() * parseInt(allQuotes[0]));
+    if (randQuoteIndex === this.currentQuoteIndex) {
+      randQuoteIndex -= 1;
+    }
+    this.currentQuoteIndex = randQuoteIndex;
+    let data = allQuotes[randQuoteIndex];
+    let quoteText = data[0];
+    this.author = data[1];
+    let quoteWords = quoteText.split(" ");
+    this.fullLength = quoteWords.length;
+    quoteWords.forEach((responseWord, i) => {
+      var encodingObj;
+      // 70% probability that a word will be encoded
+      if (Math.random() > .3) {
+        this.encodeWord(i, responseWord);
+      } else {
+        encodingObj = this.makeEncodingObj([], '');
+        this.pushNewWordToQuote(i, encodingObj, responseWord);
+      }
+    });
+
+  }
+
+  makeEncodingObj(array, code) {
+    return {
+      'encodedArray': array,
+      'encoding': code
+    };
+  }
+
+  pushNewWordToQuote(i, encodingObj, newTrueWord) {
+    if (this.currentLength >= this.fullLength || this.quote[i]) {
+      return;
+    }
+    var {
+      encodedArray,
+      encoding
+    } = encodingObj;
+    this.quote[i] = {
+      displayWord: encodedArray.length ? encodedArray[Math.floor(Math.random() * encodedArray.length)] : newTrueWord,
+      trueWord: newTrueWord,
+      encoded: encodedArray,
+      encoding: encoding
+    };
+    this.currentLength += 1;
+    console.log(this.quote);
+    console.log(this.currentLength + '/' + this.fullLength);
+    if (this.currentLength === this.fullLength) {
+      this.emit("NEW_QUOTE");
+    }
   }
 
   checkForSolve() {
     // Checking to see if completely solved
     let allGood = true;
-    for (let word of this.quote) {
+    for (let i = 0; i < this.currentLength; i++) {
+      let word = this.quote[i];
       if (word.trueWord !== word.displayWord) {
         allGood = false;
       }
@@ -158,7 +322,17 @@ class QuoteStore extends EventEmitter {
   }
 
   getAll() {
-    return {id: this.id, quote: this.quote, author: this.author};
+    let quoteArray = [];
+    for (let i = 0; i < this.fullLength; i++) {
+      quoteArray.push(this.quote[i]);
+    }
+    console.log(quoteArray);
+    console.log("RIGHT ABOEGE HEREEEE");
+    return {
+      id: this.id,
+      quote: quoteArray,
+      author: this.author
+    };
   }
 
   solveWordAtIndex(i) {

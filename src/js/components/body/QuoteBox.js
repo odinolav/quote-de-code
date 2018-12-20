@@ -29,6 +29,9 @@ export default class QuoteBox extends React.Component {
 
   render() {
     let quoteArray = this.state.loadedQuote.quote.map((magicWord, i) => {
+      console.log(magicWord);
+      console.log(this.state.loadedQuote.quote);
+      console.log("THESE TWO ABOVE");
       return <MagicWord
                 key={magicWord.trueWord+i}
                 index={i}

@@ -18,7 +18,7 @@ export default class Body extends React.Component {
 
   requestNewQuote() {
     this.inputFocus();
-    QuoteStore.newQuote();
+    QuoteStore.startNewQuote();
   }
 
   handleKeyPress(e) {
