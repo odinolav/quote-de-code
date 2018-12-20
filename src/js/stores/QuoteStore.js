@@ -296,8 +296,6 @@ class QuoteStore extends EventEmitter {
       encoding: encoding
     };
     this.currentLength += 1;
-    console.log(this.quote);
-    console.log(this.currentLength + '/' + this.fullLength);
     if (this.currentLength === this.fullLength) {
       this.emit("NEW_QUOTE");
     }
@@ -326,8 +324,6 @@ class QuoteStore extends EventEmitter {
     for (let i = 0; i < this.fullLength; i++) {
       quoteArray.push(this.quote[i]);
     }
-    console.log(quoteArray);
-    console.log("RIGHT ABOEGE HEREEEE");
     return {
       id: this.id,
       quote: quoteArray,
