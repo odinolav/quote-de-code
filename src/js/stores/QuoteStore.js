@@ -1,6 +1,4 @@
-import {
-  EventEmitter
-} from "events";
+import EventEmitter from "events";
 
 import allQuotes from '../../allQuotes.js';
 
