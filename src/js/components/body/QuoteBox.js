@@ -16,7 +16,7 @@ export default class QuoteBox extends React.Component {
 
   componentWillMount() {
     QuoteStore.on("NEW_QUOTE", () => {
-      document.getElementById("newbutton").classList.remove("buttonalert");
+      document.getElementById("newbutton").classList.remove("textpulse");
       this.setState({
         loadedQuote: QuoteStore.getAll(),
       });

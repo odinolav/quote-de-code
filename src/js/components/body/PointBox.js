@@ -35,7 +35,7 @@ export default class PointBox extends React.Component {
 
   render() {
     return (
-        <h4 id="points" ref={pointText => { this.pointText = pointText; }}>Points: {this.state.points}</h4>
+        <h4 id="points" ref={pointText => { this.pointText = pointText; }}>{this.state.points}</h4>
     );
   }
 }

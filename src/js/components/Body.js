@@ -48,7 +48,7 @@ export default class Body extends React.Component {
      this.cheatButton.current.classList.remove("textpulse");
     });
     QuoteStore.on("SOLVED", () => {
-      document.getElementById("newbutton").classList.add("buttonalert");
+      document.getElementById("newbutton").classList.add("textpulse");
     });
   }
 

@@ -16,7 +16,7 @@ class QuoteStore extends EventEmitter {
     };
     this.fullLength = 1;
     this.currentLength = 1;
-    this.solved = false;
+    this.solved = true;
     this.cheatMode = false;
     this.author = "James Miller";
     this.currentQuoteIndex = -1;
@@ -32,8 +32,8 @@ class QuoteStore extends EventEmitter {
     switch (word) {
       case "a" || "an":
         this.pushNewWordToQuote(i, {
-          encodedArray: ["a", "an", "one"],
-          encoding: "synonym"
+          encodedArray: [],
+          encoding: ""
         }, word); break;
       case "be":
         this.pushNewWordToQuote(i, {
