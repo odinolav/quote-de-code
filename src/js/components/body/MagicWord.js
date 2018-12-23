@@ -49,13 +49,14 @@ export default class MagicWord extends React.Component {
   reveal() {
     this.setState({
       displayWord: this.state.trueWord,
+      highlighted: "",
+      encoding: "",
+      animation: "wiggle"
     });
-    this.setState({animation: "wiggle", encoding: ""});
     this.removeListeners();
   }
 
   click() {
-    console.log(this.state.displayWord, this.state.trueWord, this.state.encoding);
     if (QuoteStore.cheatMode && this.state.trueWord !== this.state.displayWord) {
       this.setState({animation: "cheat-word"});
       PointStore.cheat();
