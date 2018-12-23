@@ -25,6 +25,7 @@ class QuoteStore extends EventEmitter {
       synonym: "synonym",
       antonym: "antonym"
     }
+    this.setMaxListeners(25);
   }
 
   encodeWord(i, word) {
@@ -295,6 +296,7 @@ class QuoteStore extends EventEmitter {
     };
     this.currentLength += 1;
     if (this.currentLength === this.fullLength) {
+      //this.removeAllListeners("GUESS_WORD");
       this.emit("NEW_QUOTE");
     }
   }
@@ -317,14 +319,22 @@ class QuoteStore extends EventEmitter {
     this.emit("GUESS_WORD", inWord);
   }
 
-  getAll() {
+  getAuthor() {
+    return this.author;
+  }
+
+  getLoadedQuote() {
     let quoteArray = [];
     for (let i = 0; i < this.fullLength; i++) {
       quoteArray.push(this.quote[i]);
     }
+    return quoteArray;
+  }
+
+  getAll() {
     return {
       id: this.id,
-      quote: quoteArray,
+      quote: this.getLoadedQuote(),
       author: this.author
     };
   }

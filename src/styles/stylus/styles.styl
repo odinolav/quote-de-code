@@ -112,30 +112,26 @@ sup
   padding: 0 .1em
   transition: .2s
   transition: .3s
-
-.magicword.highlighted.synonym:hover
-  background-color: $c-synonym
-  color: white
-
-.magicword.highlighted.rhyme:hover
-  background-color: $c-rhyme
-  color: white
-
-.magicword.highlighted.antonym:hover
-  background-color: $c-antonym
-  color: white
-
-.magicword.highlighted
-  cursor: pointer
+  &.highlighted
+    cursor: pointer
 
 .magicword.highlighted.synonym
   color: $c-synonym
+  &:hover
+    background-color: $c-synonym
+    color: white
 
 .magicword.highlighted.rhyme
   color: $c-rhyme
+  &:hover
+    background-color: $c-rhyme
+    color: white
 
 .magicword.highlighted.antonym
   color: $c-antonym
+  &:hover
+    background-color: $c-antonym
+    color: white
 
 blockquote
   display: grid
@@ -256,6 +252,8 @@ button:active
 
 .crosshair
   cursor: crosshair !important
+  & .magicword
+    cursor: crosshair !important
 
 footer
   grid-area: footer

@@ -8,29 +8,25 @@ export default class QuoteBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadedQuote: QuoteStore.getAll()
+      magicWordArray: this.createMagicWordArray(QuoteStore.getLoadedQuote(), true),
+      author: QuoteStore.getAuthor()
     }
-
-    this.quoteList = React.createRef();
   }
 
   componentWillMount() {
     QuoteStore.on("NEW_QUOTE", () => {
       document.getElementById("newbutton").classList.remove("textpulse");
       this.setState({
-        loadedQuote: QuoteStore.getAll(),
+        magicWordArray: this.createMagicWordArray(QuoteStore.getLoadedQuote()),
+        author: QuoteStore.getAuthor()
       });
     });
   }
 
-  cleanWord(word) {
-    return word.toLowerCase().replace(",", "");
-  }
-
-  render() {
-    let quoteArray = this.state.loadedQuote.quote.map((magicWord, i) => {
+  createMagicWordArray(loadedQuote, initial) {
+    let newMagicWordArray = loadedQuote.map((magicWord, i) => {
       return <MagicWord
-                key={magicWord.trueWord+i}
+                key={magicWord.trueWord+i+magicWord.displayWord}
                 index={i}
                 displayWord={magicWord.displayWord}
                 trueWord={magicWord.trueWord}
@@ -38,14 +34,18 @@ export default class QuoteBox extends React.Component {
                 encoding={magicWord.encoding}
               />;
     });
+    return newMagicWordArray;
+  }
+
+  render() {
 
     return (
         <blockquote>
           <span>
-            <span id="quotebody" ref={this.quoteList}>
-              <span className="quotationmark">“</span>{ quoteArray }<span className="quotationmark">”</span>
+            <span id="quotebody">
+              <span className="quotationmark">“</span>{ this.state.magicWordArray }<span className="quotationmark">”</span>
             </span>
-            <small id="author">—{this.state.loadedQuote.author}</small>
+            <small id="author">—{this.state.author}</small>
           </span>
         </blockquote>
     );

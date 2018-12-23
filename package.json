@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://odinolav.com",
   "dependencies": {
+    "eventemitter3": "^3.1.0",
     "react": "^16.7.0",
     "react-dom": "^16.6.3"
   },
